@@ -1,10 +1,13 @@
-version: "3.7"
+version: "3"
 
 services:
   portainer:
     image: portainer/portainer
     ports:
       - "9000:9000"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - portainer_data:/data
   node-red:
     image: nodered/node-red:1.0.0-10-arm32v7
     environment:
@@ -21,3 +24,6 @@ services:
       - /home/pi/mqtt/config:/mosquitto/config
       - /home/pi/mqtt/data:/mosquitto/data
       - /home/pi/mqtt/log:/mosquitto/log
+
+volumes:
+  portainer_data:
