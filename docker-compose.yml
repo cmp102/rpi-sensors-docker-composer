@@ -1,0 +1,23 @@
+version: "3.7"
+
+services:
+  portainer:
+    image: portainer/portainer
+    ports:
+      - "9000:9000"
+  node-red:
+    image: nodered/node-red:1.0.0-10-arm32v7
+    environment:
+      - TZ=Europe/Madrid
+    ports:
+      - "1880:1880"
+    volumes:
+      - /home/pi/node-red:/data
+  mosquitto:
+    image: eclipse-mosquitto
+    ports:
+      - "1883:1883"
+    volumes:
+      - /home/pi/mqtt/config:/mosquitto/config
+      - /home/pi/mqtt/data:/mosquitto/data
+      - /home/pi/mqtt/log:/mosquitto/log
