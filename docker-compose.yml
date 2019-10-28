@@ -16,6 +16,9 @@ services:
       - "1880:1880"
     volumes:
       - /home/pi/node-red:/data
+    links:
+      - mosquitto
+      - influxdb
   mosquitto:
     image: eclipse-mosquitto
     ports:
@@ -24,6 +27,26 @@ services:
       - /home/pi/mqtt/config:/mosquitto/config
       - /home/pi/mqtt/data:/mosquitto/data
       - /home/pi/mqtt/log:/mosquitto/log
-
+  influxdb:
+    image: influxdb
+    ports:
+      - "8086:8086"
+      - "8083:8083"
+      - "2003:2003"
+    volumes:
+      - /home/pi/influxdb:/var/lib/influxdb
+    environment:
+      INFLUXDB_HTTP_AUTH_ENABLED: "true"
+      INFLUXDB_ADMIN_USER: admin
+      INFLUXDB_ADMIN_PASSWORD: admin
+      
+  chronograf:
+    image: chronograf
+    ports:
+      - "8888:8888"
+    volumes:
+      - /home/pi/chronograf:/var/lib/chronograf
+    links:
+      - influxdb
 volumes:
   portainer_data:
