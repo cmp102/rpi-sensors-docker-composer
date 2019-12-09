@@ -1,0 +1,4 @@
+[submodule "xiaomi-ble-mqtt"]
+	path = python_mitemp/xiaomi-ble-mqtt
+	url = https://github.com/algirdasc/xiaomi-ble-mqtt
+	

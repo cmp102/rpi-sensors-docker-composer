@@ -1,0 +1,21 @@
+FROM debian:10
+
+WORKDIR /usr/src/myapp
+
+RUN apt update
+RUN apt install python3 -y
+RUN apt install python3-pip -y
+RUN apt install bluez -y
+RUN apt install libglib2.0-dev -y
+RUN apt install cron -y
+RUN pip3 install bluepy
+RUN pip3 install paho-mqtt
+RUN pip3 install btlewrap
+RUN /etc/init.d/dbus start
+RUN /etc/init.d/bluetooth start
+
+RUN echo '*/1 * * * * root /usr/src/myapp/data-read.py >> /var/log/mitemp.log 2>&1' >> /etc/crontab
+
+COPY xiaomi-ble-mqtt /usr/src/myapp
+
+CMD ["cron", "-f", "-L 15"]

@@ -48,5 +48,25 @@ services:
       - /home/pi/chronograf:/var/lib/chronograf
     links:
       - influxdb
+
+  python3:
+    build: python 
+    volumes:
+      - /home/pi/python:/usr/src/myapp
+      - /tmp/.docker.xauth:/tmp/.docker.xauth
+      - /tmp/.X11-unix:/tmp/.X11-unix
+    stdin_open: true
+    tty: true
+    environment:
+      - XAUTHORITY=/tmp/.docker.xauth
+      - DISPLAY=${DISPLAY}
+      
+  python3_mitemp:
+     build: python_mitemp
+     stdin_open: true
+     tty: true
+     privileged: true
+     network_mode: "host"
+
 volumes:
   portainer_data:

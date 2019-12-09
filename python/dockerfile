@@ -1,0 +1,13 @@
+FROM python:3
+
+WORKDIR /usr/src/myapp
+
+RUN apt update
+RUN apt install python3-pandas -y
+RUN apt install python3-numpy -y
+RUN apt install python3-matplotlib -y
+RUN apt install python3-seaborn -y 
+RUN apt install python3-sklearn -y
+RUN apt install -qqy x11-apps
+
+CMD /bin/bash
